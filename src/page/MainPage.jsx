@@ -3,9 +3,8 @@ import Hero from "../component/Hero";
 import SpecialDishes from "../component/SpecialDishes";
 import Menu from "../component/Menu";
 
-function MainPage(props) {
+function MainPage() {
 
-    // props.setLoader(true)
   return (
     <div>
       <Hero />

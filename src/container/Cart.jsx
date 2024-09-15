@@ -8,7 +8,7 @@ function Cart(props) {
   //       item.strMealThumb
   //    )
   // })
-  console.log("Props MealId :", props.mealId);
+  // console.log("Props MealId :", props.mealId);
 
   return (
     <Link to={`/food/${props.mealId}`}>

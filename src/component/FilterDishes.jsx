@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import Pagination from "./Pagination";
+import React, { useContext, useState, useEffect} from "react";
+// import Pagination from "./Pagination";
 import DishList from "./DishList";
+import {AllMenuContext} from "../App";
 
 function FilterDishes(props) {
+
+
+  const {meal,setMeal} = useContext(AllMenuContext)
   
 
   const [filteredDishes, setFilteredDishes] = useState([0]);
   const [activeDish, setActiveDish] = useState("Beef");
   const [currentPage,setCurrentPage] = useState(1)
   const [itemsPerPage,setitemsPerPage] = useState(4)
+  const [Catagories, setCatagories] = useState([]);
+  const [singleDish, setSingleDish] = useState([]);
  
    const indexOfLastDish  = currentPage * itemsPerPage
    // 1 * 4 = 4
@@ -19,9 +25,27 @@ function FilterDishes(props) {
 
    const showTheseDishes = filteredDishes.slice(indexOfFirstDish,indexOfLastDish) 
 
+
+    // Get all Categories
+   const allCategories = async () => {
+    const API_URL = "https://www.themealdb.com/api/json/v1/1/categories.php";
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    setCatagories(data.categories);
+    // props.setLoader(false)
+  };
+
+    // Get Only Single Dish
+  const getOnlyOneDish = async () => {
+    const API_URL = "https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef";
+    let response = await fetch(API_URL);
+    let singleDishData = await response.json();
+    setSingleDish(singleDishData.meals);
+  };
+
     // Show only single Dishes
     let maxListItem = 4
-  let singleDishItems = props.singleDishData.map((item,index) => {
+  let singleDishItems = singleDish.map((item,index) => {
     if (index < maxListItem) {
         return (
         <DishList item={item}/>
@@ -33,9 +57,9 @@ function FilterDishes(props) {
     // Show onClick Filtered Dishes 
   function showFilterDishHandler(categories) {
     setActiveDish(categories);
-    props.setSingleDish([])
+    setSingleDish([])
 
-    const FilteredDishesArray = props.mealCategories
+    const FilteredDishesArray = meal
       .filter((item) => {
         return item.strCategory === categories;
       })
@@ -55,7 +79,7 @@ function FilterDishes(props) {
   }
 
     // Category Dishes
-  const allCategories = props.catagories.map((item) => {
+  const CategoriesDishes = Catagories.map((item) => {
     return (
       <li
         onClick={() => {
@@ -63,13 +87,18 @@ function FilterDishes(props) {
         }}
         className={` ${
           item.strCategory === activeDish ? "active" : ""
-        } text-white cursor-pointer sm:max-w-52   pt-2 font-semibold pb-2 pr-10 bg-yellow-500 rounded-full hover:bg-blue-950  hover:transition-all duration-500`}
+        } text-white flex justify-center cursor-pointer sm:py-4  py-3  font-semibold  bg-yellow-500 rounded-full hover:bg-blue-950  hover:transition-all duration-500`}
       >
         {item.strCategory}
       </li>
     );
   });
-  // console.log("item Clicked:", hasSelectedCategory);
+
+  useEffect(() => {
+    allCategories();
+    getOnlyOneDish();
+  }, []);
+ 
 
   return (
     <div className="mx-11 text-center">
@@ -82,7 +111,7 @@ function FilterDishes(props) {
           blanditiis illum, cum atque ducimus?
         </p>
       </div>
-      <ul className="grid sm:grid-cols-4 grid-cols-2  sm:mx-40 gap-2 ">{allCategories}</ul>
+      <ul className="grid sm:grid-cols-4 grid-cols-2  gap-2 ">{CategoriesDishes}</ul>
       {/* <ul className="mt-12 flex flex-wrap gap-3 "></ul> */}
       <div className=" mt-9 ">
         <ul className="place-items-center grid sm:grid-cols-4 sm:mr-4 ">

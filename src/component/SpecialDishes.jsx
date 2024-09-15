@@ -10,6 +10,8 @@ function SpecialDishes() {
           incidunt harum inventore sunt deserunt? Esse facere ab ipsum incidunt.
         </p>
       </div>
+
+      
     </div>
   );
 }
