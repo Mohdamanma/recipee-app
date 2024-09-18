@@ -74,7 +74,7 @@ function FoodDetails() {
       <h2 className="text-black text-2xl font-semibold mt-5">
         {singleMeal.strMeal}
       </h2>
-      <p className="text-black text-xl font-medium py-2">$50000</p>
+      <p className="text-black text-xl font-medium py-2">$6000</p>
       <div className="flex pb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
