@@ -7,9 +7,7 @@ import { AllMenuContext } from '../App'
 function Menu() {
 
   const [Catagories, setCatagories] = useState([]);
-  const [singleDish, setSingleDish] = useState([]);
-
-
+  const [singleDish, setSingleDish] = useState([]);  
   const { meal, setMeal } = useContext(AllMenuContext)
 
 
@@ -54,15 +52,25 @@ function Menu() {
   }, []);
 
 
-  let imgSrc = meal.map((item) => {
-    return item.strMealThumb;
-  });
-  let mealName = meal.map((item) => {
-    return item.strMeal;
-  });
-  const idMeal = meal.map((item) => {
-    return item.idMeal;
-  });
+  const trendingDish = meal.map((item, index) => {
+    // console.log("meals items are :",index)
+    if (index < 6) {
+      return (
+        <Cart meal={item.strMealThumb} name={item.strMeal} mealId={item.idMeal} />
+      )
+    }
+  })
+
+  const popularDishes = meal.map((item, index) => {
+    // console.log("items are : ", index)
+    if (index >= 43) {
+      return (
+        <Cart meal={item.strMealThumb} name={item.strMeal} mealId={item.idMeal} />
+      )
+    }
+
+  })
+
 
   return (
     <section className=" ">
@@ -70,14 +78,9 @@ function Menu() {
         Trending Dishes
       </h1>
       <div className="sm:w-72 w-36 h-1 ml-14 mt-2 bg-orange-500"></div>
-
       <div className="sm:px-6 px-5  mt-8 grid sm:grid-cols-3  gap-7 ">
-        <Cart meal={imgSrc[0]} name={mealName[0]} mealId={idMeal[0]} />
-        <Cart meal={imgSrc[1]} name={mealName[1]} mealId={idMeal[1]} />
-        <Cart meal={imgSrc[2]} name={mealName[2]} mealId={idMeal[2]} />
-        <Cart meal={imgSrc[3]} name={mealName[3]} mealId={idMeal[3]} />
-        <Cart meal={imgSrc[4]} name={mealName[4]} mealId={idMeal[4]} />
-        <Cart meal={imgSrc[5]} name={mealName[5]} mealId={idMeal[5]} />
+        {trendingDish}
+
       </div>
 
       <h1 className=" text-black sm:text-4xl  text-xl font-semibold from-neutral-800 sm:mt-16 mt-10 ml-5 ">
@@ -85,12 +88,7 @@ function Menu() {
       </h1>
       <div className="sm:w-72 w-36   h-1 ml-14 mt-2 bg-orange-500"></div>
       <div className="sm:px-6 px-5   mt-8 grid sm:grid-cols-3  gap-7 ">
-        <Cart meal={imgSrc[6]} name={mealName[6]} mealId={idMeal[6]} />
-        <Cart meal={imgSrc[7]} name={mealName[7]} mealId={idMeal[7]} />
-        <Cart meal={imgSrc[8]} name={mealName[8]} mealId={idMeal[8]} />
-        <Cart meal={imgSrc[9]} name={mealName[9]} mealId={idMeal[9]} />
-        <Cart meal={imgSrc[10]} name={mealName[10]} mealId={idMeal[10]} />
-        <Cart meal={imgSrc[11]} name={mealName[11]} mealId={idMeal[11]} />
+        {popularDishes}
       </div>
 
 

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function Cart(props) {
-  //  console.log("props are ",props.meal);
+  //  console.log("props of 6 items ",props);
 
   // let trendingDishesImg = props.meal.map((item)=>{
   //    return (

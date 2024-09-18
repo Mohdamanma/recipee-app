@@ -2,25 +2,30 @@ import Navbar from "./component/Navbar";
 import React, { useState } from "react";
 import loaderSVG from "./Asset/Bean Eater@1x-1.0s-200px-200px.svg";
 import Footer from "./component/Footer";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Rounter, Routes, Route } from "react-router-dom";
 import MainPage from "./page/MainPage";
 import FoodDetails from "./component/FoodDetails";
 import { useEffect } from "react";
 import AddToCart from "./component/AddToCart";
 import LoginPage from "./page/LoginPage";
 import SignUpPage from "./page/SignUpPage";
+// import { AppProvider } from "./context/AppProvider";
 
 
 export const AllMenuContext = React.createContext()
 
 function App() {
+  
+  
+//  console.log("UseReducer : ",state)
+   
   const [loader, setLoader] = useState(false);
 
   const [cart,setCart] =useState([])
 
   const [meal, setMeal] = useState([]);
-
   
+ 
 
   
 
@@ -36,7 +41,7 @@ function App() {
       {loader ? (
         <div className="h-screen">
             <AllMenuContext.Provider value={{ meal, setMeal ,cart,setCart}}>
-          <BrowserRouter>
+          <Rounter>
             <Navbar  />
 
               <Routes>
@@ -50,7 +55,7 @@ function App() {
                 <Route path="/signUp" element={<SignUpPage/>}/>
               </Routes>
             <Footer />
-          </BrowserRouter>
+          </Rounter>
             </AllMenuContext.Provider>
         </div>
       ) : (
@@ -61,3 +66,4 @@ function App() {
 }
 
 export default App;
+

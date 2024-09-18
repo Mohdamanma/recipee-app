@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AllMenuContext } from "../App";
 
@@ -6,8 +6,10 @@ function FoodDetails() {
 
   const { cart, setCart } = useContext(AllMenuContext)
 
+  //  const [state,dispatch] = useReducer()
 
-  // console.log("All cart item :",cart)
+  //  console.log("usereduce is :",dispatch)  
+
 
   const [singleMeal, setSingleMeal] = useState([]);
   const { mealId } = useParams();
@@ -18,9 +20,8 @@ function FoodDetails() {
     const data = await response.json();
     console.log("fetch data :", data)
     setSingleMeal(data.meals[0])
-    console.log(data.meals[0])
+    console.log("Single meal are :", data.meals)
   };
-  // console.log("Single Meal data :", singleMeal)
 
   useEffect(() => {
     fetchFoodDetails();
@@ -32,6 +33,9 @@ function FoodDetails() {
     return Math.floor(Math.random() * 1001)
   }
 
+  //   let User =  JSON.parse(sessionStorage.getItem('User'))
+
+  //  console.log("cuurent User :",User.Email)  
 
   function onCartHandler() {
     let priceItem = getRandomPrice()
@@ -43,13 +47,15 @@ function FoodDetails() {
       totalPrice: priceItem * 1
     }
     // cart.push(cartItem)
+    const {cart} = JSON.parse(sessionStorage.getItem('User'))
 
- setCart((prevItem) => [...prevItem,cartItem])
-    
-  
-    const currentUser = JSON.parse(sessionStorage.getItem('User'))
-    // {...curentUser,cart : cartItem}
-    console.log("cart Item are :", currentUser)
+    setCart((prevItem) => [...prevItem, cartItem])
+
+   
+
+    // currentUser.cart.push([...cartItem]);
+
+    console.log("cart Item are :", cart)
 
   }
 
