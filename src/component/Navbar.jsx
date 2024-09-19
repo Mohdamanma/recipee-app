@@ -38,7 +38,7 @@ function Navbar() {
         <div className="flex items-center ml-4">
           <img src={logo} height={50} width={80} alt="" />
           <h1 className="text-black text-xl  sm:text-4xl font-bold ">
-           Food Ninja
+           Food hunter
           </h1>
         </div>
         {
