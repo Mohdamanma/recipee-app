@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import AddToCart from "./component/AddToCart";
 import LoginPage from "./page/LoginPage";
 import SignUpPage from "./page/SignUpPage";
+import Payment from "./component/Payment";
 // import { AppProvider } from "./context/AppProvider";
 
 
@@ -53,6 +54,7 @@ function App() {
                 <Route path="/cart" element={<AddToCart />} />
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/signUp" element={<SignUpPage/>}/>
+                <Route path="/payment" element={<Payment/>}/>
               </Routes>
             <Footer />
           </Rounter>
