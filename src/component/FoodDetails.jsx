@@ -47,7 +47,7 @@ function FoodDetails() {
       totalPrice: priceItem * 1
     }
     // cart.push(cartItem)
-    const {cart} = JSON.parse(sessionStorage.getItem('User'))
+    // const {cart} = JSON.parse(sessionStorage.getItem('User'))
 
     setCart((prevItem) => [...prevItem, cartItem])
 
@@ -74,7 +74,7 @@ function FoodDetails() {
       <h2 className="text-black text-2xl font-semibold mt-5">
         {singleMeal.strMeal}
       </h2>
-      <p className="text-black text-xl font-medium py-2">$6000</p>
+      <p className="text-black text-xl font-medium py-2">$7000</p>
       <div className="flex pb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@ function FoodDetails() {
       <div className="flex">
         <p className="text-black">Domanic Pizza Centre</p>
         <div className="text-black w-0.5 h-7 mx-6"></div>
-        <p className="text-black">5th Avenue Time Squre, New york</p>
+        <p className="text-black">5th Avenue Time Squre, New york </p>
       </div>
       {/* <ul>{mealIncredients}</ul> */}
       <p className="text-gray-500 py-4 pb-11">
