@@ -1,35 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../Asset/logo-removebg-preview.png";
 import { Link, useNavigate } from "react-router-dom";
 
 import { AllMenuContext } from "../App";
-import Cart from "../container/Cart";
+
 
 function Navbar() {
 
 
+  // const number = [2, 34, 432, 21, 43, 34, 1]
+
+  // const newNumber = number.filter((number) => number == 432)
+
+  // console.log("Number are :",newNumber)
+
+
+
   const { cart } = useContext(AllMenuContext)
-  // const account = document.getElementById('Account')
-
-
-  console.log("item in Cart :", cart.length)
+ 
 
   const navigate = useNavigate()
 
-  const currentUser = JSON.parse(sessionStorage.getItem('User'))
+  const currentUser = JSON.parse(localStorage.getItem('User'))
 
-  // console.log("user Exist", userExist)
 
-  // if (userExist) {
-  //   account.innerHTML = "Logout"
-  // }else{
-  //   account.innerHTML ="Login"
-  // }
+
+
 
   function onLogOutHandler() {
-    sessionStorage.removeItem('User')
+    localStorage.removeItem('User')
     navigate('/signUp')
   }
+
 
 
   return (
@@ -39,7 +41,7 @@ function Navbar() {
           <img src={logo} height={50} width={80} alt="" />
           <h1 className="text-black text-xl  sm:text-4xl font-bold ">
 
-           Food Ninja
+            Food Ninja
 
           </h1>
         </div>
@@ -67,12 +69,17 @@ function Navbar() {
                 <button className="border-2 rounded-2xl sm:font-bold cursor-pointer hover:bg-yellow-300 sm:p-3 py-1 px-2">
                   Orders
                 </button>
+                <button onClick={onLogOutHandler} className="border-red-600 border-2 rounded-2xl sm:font-semibold cursor-pointer active:bg-red-500 sm:p-3 px-2">
+                  Logout
+                </button>
               </div>
             ) :
 
-            (<button id="Account" onClick={onLogOutHandler} className="border-2 rounded-2xl sm:font-semibold cursor-pointer hover:bg-yellow-300 sm:p-3 py-1 px-2">
-              Login
-            </button>)
+            (<Link to='/login'>
+              <button id="Account" className="border-2 rounded-2xl sm:font-semibold cursor-pointer hover:bg-yellow-300 sm:p-3 py-1 px-2">
+                Login
+              </button>
+            </Link>)
         }
 
       </div>

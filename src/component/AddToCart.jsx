@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { AllMenuContext } from '../App'
 import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../CreateClient'
 
 function AddToCart() {
   const { cart, setCart } = useContext(AllMenuContext)
@@ -29,12 +30,18 @@ function AddToCart() {
 
 
 
-  function onCloseIconHandler(index, itemName) {
+  async function onCloseIconHandler(index, itemName) {
     console.log("clicked :", index)
 
-    // cart.splice(index, 1)
+    const currentUser = JSON.parse(localStorage.getItem('User'))
+
     const removeItem = cart.filter((item) => item.name !== itemName)
-    console.log("remove item :", cart)
+
+    const removeItemIndex = cart.findIndex((item) => item.name !== itemName)
+
+
+    console.log("remove item :", removeItemIndex)
+
     setCart(removeItem)
   }
 
@@ -59,8 +66,8 @@ function AddToCart() {
           {/* <h5 className='sm:font-medium text-xl sm:px-8'>{item.price}</h5> */}
           <div className='flex items-center '>
             <h1 className='sm:font-semibold font-medium text-black text-lg sm:mr-3 mr-1'>{item.quantity}</h1>
-            <button onClick={() => onRemoveCartHandler(item.name, item.quantity - 1, item.totalPrice)} className='sm:w-7 sm:h-9  w-4 h-5 border-gray-700 border-2'>-</button>
-            <button onClick={() => onAddCartHandler(item.name, item.quantity + 1, item.price)} className='sm:w-7 sm:h-9 w-4 h-5 border-gray-700  border-2'>+</button>
+            <button onClick={() => onRemoveCartHandler(item.name, item.quantity - 1, item.totalPrice)} className='sm:w-7 sm:h-9  w-4 h-5  border-gray-700 border-2'>-</button>
+            <button onClick={() => onAddCartHandler(item.name, item.quantity + 1, item.price)} className='sm:w-7 sm:h-9 w-4 h-5 active:bg-gray-500 border-gray-700  border-2'>+</button>
           </div>
 
           <h5 className='sm:font-medium text-xl sm:px-8'>{item.totalPrice}</h5>

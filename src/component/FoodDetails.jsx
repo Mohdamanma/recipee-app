@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AllMenuContext } from "../App";
+import { supabase } from "../CreateClient";
 
 function FoodDetails() {
-
-  const { cart, setCart } = useContext(AllMenuContext)
-
-  //  const [state,dispatch] = useReducer()
-
-  //  console.log("usereduce is :",dispatch)  
-
+  const { cart, setCart } = useContext(AllMenuContext);
+  const [toast, setToast] = useState(false);
+  // const [toastArray, setToastArray] = useState([]);
 
   const [singleMeal, setSingleMeal] = useState([]);
   const { mealId } = useParams();
@@ -18,56 +15,112 @@ function FoodDetails() {
     const API_URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
     const response = await fetch(API_URL);
     const data = await response.json();
-    console.log("fetch data :", data)
-    setSingleMeal(data.meals[0])
-    console.log("Single meal are :", data.meals)
+    console.log("fetch data:", data);
+    setSingleMeal(data.meals[0]);
+    console.log("Single meal are:", data.meals);
   };
+
+
+
 
   useEffect(() => {
     fetchFoodDetails();
   }, []);
 
-
-
   function getRandomPrice() {
-    return Math.floor(Math.random() * 1001)
+    return Math.floor(Math.random() * 1001);
   }
 
-  //   let User =  JSON.parse(sessionStorage.getItem('User'))
+  const currentUser = JSON.parse(localStorage.getItem('User'))
 
-  //  console.log("cuurent User :",User.Email)  
+
+  const insertCartIntoSupabase = async () => {
+    const { data, error } = await supabase
+      .from('users')
+      .update({ cart: cart })
+      .eq('id', currentUser.id)
+
+    if (error) {
+      console.error('Error inserting cart data:', error);
+    } else {
+      console.log('Cart data inserted:', data);
+    }
+  };
+
+  
+  // Call this function whenever you want to insert cart data (e.g., on checkout)
+  useEffect(() => {
+    if (cart.length > 0) {
+      insertCartIntoSupabase();
+    }
+  }, [cart]);
+
+
 
   function onCartHandler() {
-    let priceItem = getRandomPrice()
+    let priceItem = getRandomPrice();
     const cartItem = {
       name: singleMeal.strMeal,
       price: priceItem,
       image: singleMeal.strMealThumb,
       quantity: 1,
-      totalPrice: priceItem * 1
-    }
-    // cart.push(cartItem)
-    // const {cart} = JSON.parse(sessionStorage.getItem('User'))
+      totalPrice: priceItem * 1,
+    };
 
-    setCart((prevItem) => [...prevItem, cartItem])
 
-   
+    setCart((prevItem) => {
+      const existingItemIndex = prevItem.findIndex((item) => item.name === cartItem.name);
 
-    // currentUser.cart.push([...cartItem]);
+      if (existingItemIndex !== -1) {
+        const updateCart = [...prevItem];
+        const existingItem = updateCart[existingItemIndex];
+        existingItem.quantity += 1;
+        existingItem.totalPrice = existingItem.price * existingItem.quantity;
+        return updateCart;
+      } else {
+        setToast(true);
 
-    console.log("cart Item are :", cart)
+        return [...prevItem, cartItem];
+      }
+    });
 
+
+
+    setTimeout(() => {
+      setToast(false)
+    }, 5000);
   }
 
 
 
   return (
-    <div className="bg-white sm:px-14 mx-10  ">
-      <div className="pt-16"></div>
-      <div className="h-96 sm:w-full object-cover w-80">
+    <div className="relative bg-white sm:px-14 mx-10  ">
+      {
+        toast ? <div className="absolute right-5 bottom-1" >
+          <div className="relative w-80 h-16 bg-yellow-400 flex items-center gap-3 justify-center shadow-2xl Toast">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+              />
+            </svg>
+            <p className="font-semibold">Added to cart</p>
+          </div>
+        </div> : null
+      }
+      <div className="h-96 sm:w-full w-80">
         <img
           src={singleMeal.strMealThumb}
-          className="w-full h-full rounded-xl"
+          className="w-full h-full rounded-xl object-fill"
+          alt="Meal"
         />
       </div>
 
