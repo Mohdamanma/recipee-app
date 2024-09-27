@@ -20,7 +20,7 @@ function Menu() {
       let response = await fetch(API_URL);
       let data = await response.json();
       setMeal(data.meals);
-      console.log("fetch data :", data.meals);
+      // console.log("fetch data :", data.meals);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

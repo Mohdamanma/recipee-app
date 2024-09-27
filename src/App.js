@@ -10,7 +10,6 @@ import AddToCart from "./component/AddToCart";
 import LoginPage from "./page/LoginPage";
 import SignUpPage from "./page/SignUpPage";
 import Payment from "./component/Payment";
-// import { AppProvider } from "./context/AppProvider";
 
 
 export const AllMenuContext = React.createContext()
@@ -26,16 +25,13 @@ function App() {
 
   const [meal, setMeal] = useState([]);
   
- 
-
-  
 
   useEffect(() => {
     setTimeout(() => {
       setLoader(true);
     }, 3000);
   }, [])
-  // console.log("Loading :",loader)
+ 
 
   return (
     <>

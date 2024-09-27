@@ -79,7 +79,7 @@ function FilterDishes(props) {
   }
 
     // Category Dishes
-  const CategoriesDishes = Catagories.map((item) => {
+  const CategoriesDishes = Catagories.map((item,index) => {
     return (
       <li
         onClick={() => {
@@ -111,7 +111,7 @@ function FilterDishes(props) {
           blanditiis illum, cum atque ducimus?
         </p>
       </div>
-      <ul className="grid sm:grid-cols-4 grid-cols-2  gap-2 ">{CategoriesDishes}</ul>
+      <ul className="grid sm:grid-cols-4 grid-cols-2  gap-2 " >{CategoriesDishes}</ul>
       {/* <ul className="mt-12 flex flex-wrap gap-3 "></ul> */}
       <div className=" mt-9 ">
         <ul className="place-items-center grid sm:grid-cols-4 sm:mr-4 ">

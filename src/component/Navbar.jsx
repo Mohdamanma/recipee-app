@@ -1,35 +1,60 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../Asset/logo-removebg-preview.png";
 import { Link, useNavigate } from "react-router-dom";
 
 import { AllMenuContext } from "../App";
-import Cart from "../container/Cart";
+import { supabase } from "../CreateClient";
+
 
 function Navbar() {
 
 
-  const { cart } = useContext(AllMenuContext)
-  // const account = document.getElementById('Account')
+  const { cart, setCart } = useContext(AllMenuContext)
+
+  const currentUser = JSON.parse(localStorage.getItem('User'))
+
+  const fetchUserData = async () => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq("id", currentUser)
 
 
-  console.log("item in Cart :", cart.length)
+    let item = JSON.parse(data[0].cart)
+    setCart(item)
+
+    if (error) {
+      console.error('Error inserting cart data:', error);
+    } else {
+      console.log('user cart data:', item);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUserData();
+    }
+  }, []);
+
+
+
+
+  // const { cart } = useContext(AllMenuContext)
+
 
   const navigate = useNavigate()
 
-  const currentUser = JSON.parse(sessionStorage.getItem('User'))
+  // const currentUser = JSON.parse(localStorage.getItem('User'))
 
-  // console.log("user Exist", userExist)
 
-  // if (userExist) {
-  //   account.innerHTML = "Logout"
-  // }else{
-  //   account.innerHTML ="Login"
-  // }
+
+
 
   function onLogOutHandler() {
-    sessionStorage.removeItem('User')
-    navigate('/signUp')
+    // localStorage.removeItem('User')
+    // navigate('/signUp')
   }
+
 
 
   return (
@@ -38,9 +63,7 @@ function Navbar() {
         <div className="flex items-center ml-4">
           <img src={logo} height={50} width={80} alt="" />
           <h1 className="text-black text-xl  sm:text-4xl font-bold ">
-
-           Food Ninja
-
+            Food Ninja
           </h1>
         </div>
         {
@@ -67,12 +90,17 @@ function Navbar() {
                 <button className="border-2 rounded-2xl sm:font-bold cursor-pointer hover:bg-yellow-300 sm:p-3 py-1 px-2">
                   Orders
                 </button>
+                <button onClick={onLogOutHandler} className="border-red-600 border-2 rounded-2xl sm:font-semibold cursor-pointer active:bg-red-500 sm:p-3 px-2">
+                  Logout
+                </button>
               </div>
             ) :
 
-            (<button id="Account" onClick={onLogOutHandler} className="border-2 rounded-2xl sm:font-semibold cursor-pointer hover:bg-yellow-300 sm:p-3 py-1 px-2">
-              Login
-            </button>)
+            (<Link to='/login'>
+              <button id="Account" className="border-2 rounded-2xl sm:font-semibold cursor-pointer hover:bg-yellow-300 sm:p-3 py-1 px-2">
+                Login
+              </button>
+            </Link>)
         }
 
       </div>
@@ -81,6 +109,10 @@ function Navbar() {
           <img src={logo} height={50} width={80} alt="" />
         </div>
       </div>
+
+   
+   
+
     </>
   );
 }
