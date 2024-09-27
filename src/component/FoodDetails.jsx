@@ -38,7 +38,7 @@ function FoodDetails() {
     const { data, error } = await supabase
       .from('users')
       .update({ cart: cart })
-      .eq('id', currentUser.id)
+      .eq('id', currentUser)
 
     if (error) {
       console.error('Error inserting cart data:', error);
@@ -47,7 +47,7 @@ function FoodDetails() {
     }
   };
 
-  
+
   // Call this function whenever you want to insert cart data (e.g., on checkout)
   useEffect(() => {
     if (cart.length > 0) {
@@ -79,7 +79,6 @@ function FoodDetails() {
         return updateCart;
       } else {
         setToast(true);
-
         return [...prevItem, cartItem];
       }
     });

@@ -3,33 +3,56 @@ import logo from "../Asset/logo-removebg-preview.png";
 import { Link, useNavigate } from "react-router-dom";
 
 import { AllMenuContext } from "../App";
+import { supabase } from "../CreateClient";
 
 
 function Navbar() {
 
 
-  // const number = [2, 34, 432, 21, 43, 34, 1]
+  const { cart, setCart } = useContext(AllMenuContext)
 
-  // const newNumber = number.filter((number) => number == 432)
+  const currentUser = JSON.parse(localStorage.getItem('User'))
 
-  // console.log("Number are :",newNumber)
+  const fetchUserData = async () => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq("id", currentUser)
+
+
+    let item = JSON.parse(data[0].cart)
+    setCart(item)
+
+    if (error) {
+      console.error('Error inserting cart data:', error);
+    } else {
+      console.log('user cart data:', item);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUserData();
+    }
+  }, []);
 
 
 
-  const { cart } = useContext(AllMenuContext)
- 
+
+  // const { cart } = useContext(AllMenuContext)
+
 
   const navigate = useNavigate()
 
-  const currentUser = JSON.parse(localStorage.getItem('User'))
+  // const currentUser = JSON.parse(localStorage.getItem('User'))
 
 
 
 
 
   function onLogOutHandler() {
-    localStorage.removeItem('User')
-    navigate('/signUp')
+    // localStorage.removeItem('User')
+    // navigate('/signUp')
   }
 
 
@@ -40,9 +63,7 @@ function Navbar() {
         <div className="flex items-center ml-4">
           <img src={logo} height={50} width={80} alt="" />
           <h1 className="text-black text-xl  sm:text-4xl font-bold ">
-
             Food Ninja
-
           </h1>
         </div>
         {
@@ -88,6 +109,10 @@ function Navbar() {
           <img src={logo} height={50} width={80} alt="" />
         </div>
       </div>
+
+   
+   
+
     </>
   );
 }

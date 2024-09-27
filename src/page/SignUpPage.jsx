@@ -81,7 +81,7 @@ function SignUpPage() {
         //     cart: []
         //   }
         // )
-        sessionStorage.setItem('storedUsers', JSON.stringify(storedUsers))
+        // sessionStorage.setItem('storedUsers', JSON.stringify(storedUsers))
         navigate('/login')
 
       }
@@ -114,7 +114,10 @@ function SignUpPage() {
           <div className='text-end text-white font-light text-sm mt-1 curson-pointer'>
             <p>Forget password</p>
           </div>
-          <button onClick={onSignUpHandler} className='text-white min-w-36 bg-orange-600 h-7  rounded-md font-medium mt-7'>Sign In</button>
+
+        <div className='flex justify-center'>
+        <button onClick={onSignUpHandler} className='text-white min-w-36 bg-orange-600 h-7 rounded-md font-medium mt-7'>Sign In</button>
+        </div>
           <p className='text-white text-sm font-light mt-2'> Already have an Account?
             <Link to='/login'>
               <span className='text-orange-400 pl-2'>Login here</span>

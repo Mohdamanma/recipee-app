@@ -65,9 +65,10 @@ function LoginPage() {
 
 
       if (user) {
-        localStorage.setItem('User', JSON.stringify(user))
+        localStorage.setItem('User', JSON.stringify(user.id))
         console.log("login successfully")
         navigate('/')
+        
       } else {
         error.innerHTML = "username or password inncorrect"
         console.log("Create new Account")
@@ -93,7 +94,7 @@ function LoginPage() {
               <p>Forget password</p>
             </div>
             <button onClick={onLoginHandler} className='text-white bg-orange-600 h-7 w-full rounded-md font-medium mt-7 '>Login In</button>
-            <Link to='/signUp'> <p className='text-white text-end mt-2 text-sm '> Create an Account</p></Link>
+            <Link to='/signUp'> <p className='text-white text-end mt-2 font-light '> Create an Account</p></Link>
           </div>
         </div>
     
