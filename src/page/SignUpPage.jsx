@@ -97,7 +97,7 @@ function SignUpPage() {
         {/* <Form onSubmit={onSubmitHandler}> */}
         {/* <div className=''> */}
         <div className='bg-black  bg-opacity-70 border-black border-2 rounded-2xl  px-7 py-14'>
-          <h2 className='text-center text-white sm:font-extrabold font-semibold '>Sign Uppoo</h2>
+          <h2 className='text-center text-white sm:font-extrabold font-semibold '>Sign Up</h2>
           <div className='flex flex-col mt-4'>
             <label htmlFor="" className='text-white'>Email</label>
             <input id='email' className='outline-none border-none rounded-md py-1' type="email" name='email' onChange={handleChange} />
