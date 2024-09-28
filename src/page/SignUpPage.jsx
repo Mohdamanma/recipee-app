@@ -118,7 +118,7 @@ function SignUpPage() {
         <div className='flex justify-center'>
         <button onClick={onSignUpHandler} className='text-white min-w-36 bg-orange-600 h-7 rounded-md font-medium mt-7'>Sign In</button>
         </div>
-          <p className='text-orange-400 text-sm font-light mt-2'> Already have an Account?
+          <p className='text-white text-sm font-light mt-2'> Already have an Account?
             <Link to='/login'>
               <span className='text-orange-400 pl-2'>Login here</span>
             </Link>
