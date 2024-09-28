@@ -51,8 +51,8 @@ function Navbar() {
 
 
   function onLogOutHandler() {
-    // localStorage.removeItem('User')
-    // navigate('/signUp')
+    localStorage.removeItem('User')
+    navigate('/signUp')
   }
 
 

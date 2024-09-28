@@ -60,7 +60,7 @@ function SignUpPage() {
 
       await supabase
         .from('users')
-        .insert({ email: user.email, name: user.name, password: user.password, cart:'' })
+        .insert({ email: user.email, name: user.name, password: user.password, cart: '' })
 
 
       const storedUsers = JSON.parse(localStorage.getItem('storedUsers')) ? JSON.parse(localStorage.getItem('storedUsers')) : []
@@ -115,14 +115,13 @@ function SignUpPage() {
             <p>Forget password</p>
           </div>
 
-        <div className='flex justify-center'>
-        <button onClick={onSignUpHandler} className='text-white min-w-36 bg-orange-600 h-7 rounded-md font-medium mt-7'>Sign In</button>
-        </div>
-          <p className='text-white text-sm font-light mt-2'> Already have an Account?
-            <Link to='/login'>
-              <span className='text-orange-400 pl-2'>Login here</span>
-            </Link>
-          </p>
+          <div className='flex justify-center'>
+            <button onClick={onSignUpHandler} className='text-white min-w-36 bg-orange-600 h-7 rounded-md font-medium mt-7'>Sign In</button>
+          </div>
+          <Link to='/login'>
+            <p className='text-white text-sm font-light mt-2'> Already have an Account?
+            </p>
+          </Link>
         </div>
         {/* </div> */}
         {/* </Form> */}
